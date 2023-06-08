@@ -1,2 +1,2 @@
-# DynamicNet
+# DynamicalNet
 Solving chaotic systems
