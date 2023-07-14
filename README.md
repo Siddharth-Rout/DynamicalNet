@@ -1,2 +1,2 @@
 # DynamicalNet
-Solving chaotic systems
+Learning chaotic systems
