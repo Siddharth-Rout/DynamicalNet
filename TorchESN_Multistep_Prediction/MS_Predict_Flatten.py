@@ -8,7 +8,8 @@ import time
 import matplotlib.pyplot as plt
 from plotMultivar import plotMultivar
 
-device = torch.device('cpu')
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print("Device: ",device)
 dtype = torch.double
 torch.set_default_dtype(dtype)
 
@@ -21,7 +22,7 @@ elif dtype == torch.float:
 #print("\n")
 #print(data)
 
-time_window = 4
+time_window = 4    # number of time steps as input
 n_features = 8
 washout = [500]
 input_size = time_window*n_features
@@ -44,7 +45,7 @@ X_data = np.expand_dims(X_data, axis = 1)
 #print(X_data.shape)
 #print(X_data)
 
-Y_data = np.expand_dims(data[time_window:, :] - data[time_window-1:-1, :], axis=1)
+Y_data = np.expand_dims(data[time_window:, :] - data[time_window-1:-1, :], axis=1)    # delta
 X_data = torch.from_numpy(X_data).to(device)
 Y_data = torch.from_numpy(Y_data).to(device)
 
