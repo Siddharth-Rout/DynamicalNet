@@ -86,6 +86,8 @@ class ESN(nn.Module):
             mode = 'RES_RELU'
         elif nonlinearity == 'id':
             mode = 'RES_ID'
+        elif nonlinearity =='leakyrelu':
+            mode = 'RES_LEAKYRELU'
         else:
             raise ValueError("Unknown nonlinearity '{}'".format(nonlinearity))
         self.batch_first = batch_first
