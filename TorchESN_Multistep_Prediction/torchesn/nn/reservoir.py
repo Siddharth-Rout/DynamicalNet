@@ -207,6 +207,8 @@ def AutogradReservoir(mode, input_size, hidden_size, num_layers=1,
         cell = ResReLUCell
     elif mode == 'RES_ID':
         cell = ResIdCell
+    elif mode == 'RES_LEAKYRELU':
+        cell = Resleakyrelu
 
     if variable_length:
         layer = (VariableRecurrent(cell, leaking_rate),)
@@ -327,7 +329,11 @@ def ResReLUCell(input, hidden, leaking_rate, w_ih, w_hh, b_ih=None):
     hy_ = F.relu(F.linear(input, w_ih, b_ih) + F.linear(hidden, w_hh))
     hy = (1 - leaking_rate) * hidden + leaking_rate * hy_
     return hy
-
+    
+def Resleakyrelu(input, hidden, leaking_rate, w_ih, w_hh, b_ih=None):
+    hy_ = F.leaky_relu(F.linear(input, w_ih, b_ih) + F.linear(hidden, w_hh))
+    hy = (1 - leaking_rate) * hidden + leaking_rate * hy_
+    return hy
 
 def ResIdCell(input, hidden, leaking_rate, w_ih, w_hh, b_ih=None):
     hy_ = F.linear(input, w_ih, b_ih) + F.linear(hidden, w_hh)
